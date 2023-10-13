@@ -1,0 +1,4 @@
+"D:\ML\MathWorks MATLAB R2023a mv9.14\medicine\ML_files\bin\matlab.exe run('sem_02_matrix_decomp.m'); exit;"
+C:\Users\админ\PycharmProjects\pythonProject\matlab\test.m
+
+-nosplash -nodesktop -r "run('C:\Users\админ\PycharmProjects\pythonProject\matlab\test.m'); exit;"
