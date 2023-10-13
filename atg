@@ -1,2 +1,4 @@
 git init
 git add .
+git commit -m "13.10.2023"
+git push origin mainS
