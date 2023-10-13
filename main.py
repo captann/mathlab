@@ -6,6 +6,9 @@ file = f"sem_0{sem_n}_matrix_decomp.m"
 
 print(f"Mode: {state};" + "\n" + f"File: {file}" + "\n" + f'Is_exit: {bool(is_exit)}' + '\n' +  f"Type: {type}")
 print("---------")
+abc = input("Correct?... ")
+if abc != 'y':
+    exit()
 if state == "r":
     if os.path.isfile(type + "\\" + file):
         s = type + "\\" + file

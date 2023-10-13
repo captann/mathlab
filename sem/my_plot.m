@@ -1,8 +1,6 @@
 clc
 clear variables
 close all
-
-
 disp(1);
 maxIterations = 500;
 gridSize = 1000;
