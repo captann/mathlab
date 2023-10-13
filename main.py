@@ -2,7 +2,7 @@ import os
 from config import *
 
 
-file = f"sem_0{sem_n}_matrix_decomp.m"
+file = f"{type}_0{sem_n}_matrix_decomp.m"
 
 print(f"Mode: {state};" + "\n" + f"File: {file}" + "\n" + f'Is_exit: {bool(is_exit)}' + '\n' +  f"Type: {type}")
 print("---------")

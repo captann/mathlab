@@ -70,90 +70,113 @@ end
 end
 
 %%
-function [Q, R] = sem_02_qr(A, name)
-n = 5;
-B = zeros(5, 5);
-Q = zeros(5, 5);
-R = zeros(5, 5);
-B(1) = A(1);
+function [Q, R]=sem_02_qr(A , name,n)
 switch name
-    case "gramm-schmidt"
-        for i=2:5
-            s = 0;
-            for k=1:i-1
-                s = s + dot(B(k), (dot(A(i), B(k)) / dot(B(k), B(k))));
-            end
-            B(i) = A(i) - s;
+case "gramm-schmid"
+Q=zeros(n);
+R=zeros(n);
+B=zeros(n);
 
-        end
-        for i=1:5
-            Q(i) = B(i) / norm(B(i));
-        end
-        R = Q' * A;
 
-    case "gramm-schmidt modified"
-        b=zeros(5,5);
-        % Ортогонализация
-       for i=1:5
-            for j=1:i-1
-                B(:,i) = B(:,i) - dot(A(:,i),B(:,j)) / dot(B(:,j),B(:,j))*B(:,j);
-            end
-        B(:,i) = B(:,i) + A(:,i);
-       end
-       for i=1:5
-            Q(i) = B(i) / norm(B(i));
-        end
-        R = Q' * A;
-    case "hausholder"
-        Q=eye(5);
-R=A;
-L=eye(5);
+for i=1:n
+    for j=1:n
 
-for i=1:4
-e=zeros(5,1);
-x=A(:,i);
-if (i-1)>0
-x(i-1,1)=0;
-e(i,1)=1;
-u=x-((norm(x))*e);
-P=L-((2*(u*u'))/(norm(u)^2));
-Q=Q*P;
-A=P*A;
-R=A;
-elseif (i-1)==0
-e(i,1)=1;
-u=x-(norm(x)*e);
-P=L-((2*(u*u'))/(norm(u)^2));
-Q=Q*P;
-A=P*A;
-R=A;
+        B(j,i)=A(j,i)-find_sum_qr_1(i,j , A,B,n);
+
+    end
+
 end
+for i=1:n
+    for j=1:n
+        Q(j,i)=(B(j,i)/norm1(B,i,n));
+
+    end
 end
 
+R=Q.'*A;
+case "gramm-schmidt modified"
+Q=zeros(n);
+R=zeros(n);
+B=zeros(n);
 
+
+for i=1:n
+    for j=1:n
+
+        B(j,i)=A(j,i)-find_sum_qr_1(i,j , B,B,n);
+
+    end
+
+end
+for i=1:n
+    for j=1:n
+        Q(j,i)=(B(j,i)/norm1(B,i,n));
+
+    end
+end
+
+R=Q.'*A;
+case "hausholder"
+        Q=eye(n);
+        R=A;
+        for i=1:n-1
+            e=zeros(n,1);
+            x = A(:, i);
+            for j = 1:i - 1
+                    x(j, 1) = 0;
+            end
+            e(i, 1) = 1;
+            u=x-norm(x)*e;
+            P=eye(n)-2*u*u.'/norm(u)^2;
+            Q=Q*P;
+            A=P*A;
+            R=A;
+
+        end
     case "givens"
-        I = eye(5, 5);
-        Q = I;
-        R = A;
+         Q=eye(n);
+        R=A;
         for i=1:n-1
             for j=1:n
-                d = sqrt((A(i, i) ^ 2 + A(i, j) ^ 2));
-                c = A(i, i) / d;
-                s = A(i, j) / d;
-                G = I;
-                G(i, i) = c;
-                G(j, i) = c;
-                G(i, j) = s;
-                G(j, j) = -s;
-                A = G * R;
-                R = A;
-                Q = Q * G';
+                G=eye(n);
+                d=sqrt(A(i,i)^2 + A(j,i)^2);
+                c=A(i,i)/d;
+                s=A(i,j)/d;
+                G(i,i)=c;
+                G(j,i)=c;
+                G(i,j)=s;
+                G(j,j)=(-1)*s;
+                A=G*R;
+                R=A;
+                Q=Q*G.';
+
             end
+
         end
+end
+end
 
 
+function s = find_sum_qr_1(i,j,  A,B,n)
+s = 0;
+H=zeros(1,n);
+Z=zeros(1,n);
+for k=1:(i - 1)
+    for t=1:n
+        H(1,t)=A(i,t);
+        Z(1,t)=B(t,k);
+    end
+    s = s + dot(H,Z)/dot(Z,Z)*A(j,k);
+end
+end
+
+function f=norm1( B,t,n )
+f=0;
+for i=1:n
+    f=f+(B(i,t)*B(i, t));
 
 end
+f=sqrt(f);
 end
 
  
