@@ -2,12 +2,14 @@ import os
 from config import *
 
 
-file = f"{type}_0{sem_n}_matrix_decomp.m"
+file = f"{type}_0{sem_n}_matrix_{sec_name}.m"
 
-print(f"Mode: {state};" + "\n" + f"File: {file}" + "\n" + f'Is_exit: {bool(is_exit)}' + '\n' +  f"Type: {type}")
+print(f"Mode: {state};" + "\n" + f"File: {file}" + "\n" + f'Is_exit: {bool(is_exit)}' + '\n'  + f"Sec_name: {sec_name}"+ '\n'  f"Type: {type}")
 print("---------")
-abc = input("Correct?... ")
+#abc = input("Correct?... ")
+abc = 'y'
 if abc != 'y':
+    print('interrupted!')
     exit()
 if state == "r":
     if os.path.isfile(type + "\\" + file):
