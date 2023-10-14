@@ -2,7 +2,7 @@
 A = randn(5);
 [C, D] = sem_02_lu(A);
 
-%[C1, D1] = lu(A);
+[C1, D1] = lu(A);
 %disp(C * D - A);
 %disp(C1 * D1 - A);
 
@@ -95,7 +95,6 @@ function [Q, R]=sem_02_qr(A , name,n)
     end
 end
 
-
 function s = find_sum_lu_2(i, j,  L, U)
     s = 0;
     for k=1:(i - 1)
@@ -136,7 +135,7 @@ function s = find_sum_qr_1(i,j,  A,B,n)
             H(1,t)=A(i,t);
             Z(1,t)=B(t,k);
         end
-        s = s + dot(H,Z)/dot(Z,Z)*A(j,k);
+        s = s + dot(H,Z)/dot(Z,Z)*B(j,k);
     end
 end
 

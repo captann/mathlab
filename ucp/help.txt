@@ -1,0 +1,3 @@
+Axes Properties
+number Title (нумерация окон)
+Line properties

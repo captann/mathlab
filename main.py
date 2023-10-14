@@ -24,9 +24,7 @@ if state == "r":
 elif state == 'c':
     if not os.path.isfile(file):
         with open(type + "\\" + file, "w+", encoding="utf-8") as f:
-            f.write("""clc
-clear variables
-close all
+            f.write("""
 N = 5;
 A = rand(N);
 """)
