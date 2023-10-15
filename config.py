@@ -1,5 +1,5 @@
 state = "g" # r, rw, g
 is_exit = False # False, True
-sem_n = 1
-sec_name = ""
-type = 'ucp' # sem, lab, #ucp
+sem_n = 2
+sec_name = "decomp"
+type = "sem"# sem, lab, ucp
