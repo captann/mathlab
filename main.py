@@ -1,25 +1,31 @@
 import os
 from config import *
+from colorama import init, Fore
 
+init(autoreset=True)
 
 file = f"{type}_0{sem_n}_matrix_{sec_name}.m"
 
-print(f"Mode: {state};" + "\n" + f"File: {file}" + "\n" + f'Is_exit: {bool(is_exit)}' + '\n'  + f"Sec_name: {sec_name}"+ '\n'  f"Type: {type}")
-print("---------")
-print("NOT USE IN PYCHARM! CMD ONLY!")
-abc = input("Correct?... ")
+print(
+    Fore.WHITE + f"Mode:     {Fore.GREEN + state};" + "\n" + Fore.WHITE + f"File:     {Fore.GREEN + file}" + "\n" + Fore.WHITE + f'Is_exit:  {Fore.GREEN + str(bool(is_exit))}' + '\n' + Fore.WHITE + f"Sec_name: {Fore.GREEN + sec_name}" + '\n' + Fore.WHITE + f"Type:     {Fore.GREEN + type}")
+print(Fore.WHITE + "---------")
+print(Fore.RED + "NOT USE IN PYCHARM! CMD ONLY!")
+print(Fore.YELLOW + "Correct?... ", end='')
+abc = input()
 if abc != 'y':
-    print('interrupted!')
+    print(Fore.RED + 'Interrupted!')
     exit()
 if state == "r":
     if os.path.isfile(type + "\\" + file):
         s = type + "\\" + file
 
-        print("Runned command: " + f'''matlab -nosplash -nodesktop -r "run('{s}'){is_exit * ';'}{is_exit * 'exit'};"''')
-        os.system(f'''matlab -nosplash -nodesktop -r "run('{s}'); {is_exit * 'exit'};"''')
-        print("done!")
+        print(
+            Fore.WHITE + "Runned command: " + Fore.GREEN +  f'''matlab -nosplash -nodesktop -r "run('{s}'){is_exit * ';'}{is_exit * 'exit'};"''')
+        os.system(
+            f'''matlab -nosplash -nodesktop -r "run('{s}'); {is_exit * 'exit'};"''')
+        print(Fore.BLUE + "Done!")
     else:
-        print("No file!")
+        print(Fore.RED + "No file!")
         exit()
 elif state == 'c':
     if not os.path.isfile(file):
@@ -28,9 +34,9 @@ elif state == 'c':
 N = 5;
 A = rand(N);
 """)
-        print("done!")
+        print(Fore.BLUE + "Done!")
     else:
-        print("Exist!")
+        print(Fore.RED + "Exist!")
         exit()
 elif state == 'rw':
     with open(type + "\\" + file, "w+", encoding="utf-8") as f:
@@ -40,9 +46,10 @@ elif state == 'rw':
     N = 5;
     A = rand(N);
     """)
-    print("done")
+    print(Fore.BLUE + "Done")
 elif state == 'g':
     from datetime import datetime
+
     with open("atg", "r", encoding='utf-8') as f:
         a = f.read()
     b = a
@@ -53,6 +60,6 @@ elif state == 'g':
     os.system("cmd < atg")
     with open("atg", "w", encoding='utf-8') as f:
         f.write(b)
-    print('done!')
+    print(Fore.BLUE + 'Done!')
 else:
-    print("Not found!")
+    print(Fore.RED + "Not found!")

@@ -10,26 +10,13 @@ sem_03_matrix(A, b, x);
 function [x, ok] = sem_03_matrix(A, b, x0)
     ok = det(A) ~= 0;
     if ok
-        Z = zeros()
-        [nRows, nColms] = size(A);
-        Z = zeros(nRows, nColms);
-        for i=1:nRows
-            for j=1:nColms
-                C = A;
-                C(i,:) = [];
-                C(:,j) = [];
-                A(i, j) = (-1) ^ (i + j);
-                Z(i, j) = 
+        disp('its_work');
 
-
-            end
-        end
-        x = A^
     end
 
 end
 
-function  [x, ok] = em_03_kramer(A, b, x0)
+function  [x, ok] = sem_03_kramer(A, b, x0)
 
 end
 
