@@ -1,11 +1,9 @@
-
+A = [1, -0.2589, -0.3093;-0.2589, 1, -0.2705;-0.3093, -0.2705, 1];
 [H, L] = size(A);
 b = [1, 1, 1]';
 x = [2.2873, 2.2162, 2.3068]';
 [x, ok] = sem_03_matrix(A, b, x);
 disp(x);
-x2 = sem_03_kramer(A, b, 3);
-disp(x2);
 
 
 function [x, ok] = sem_03_matrix(A, b, x0)
@@ -21,16 +19,7 @@ function [x, ok] = sem_03_matrix(A, b, x0)
 end
 
 function x=sem_03_kramer(A,b,n)
-B=A;
-for i=1:n
-for j=1:n
-B(j,i)=b(1,j);
-end
-disp (B)
-x(1,i)=det(B)/det(A);
-B=A;
 
-end
 end
 
 function  [x, ok] = sem_03_gauss(A, b, x0)
@@ -97,5 +86,3 @@ end
 function R = reversed_Matrix(A)
     R = adj_Matrix(A') ./ det(A);
 end
-
-
