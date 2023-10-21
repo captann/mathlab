@@ -1,41 +1,119 @@
-A = [1, -0.2589, -0.3093;-0.2589, 1, -0.2705;-0.3093, -0.2705, 1];
-[H, L] = size(A);
-b = [1, 1, 1]';
-x = [2.2873, 2.2162, 2.3068]';
-[x, ok] = sem_03_matrix(A, b, x);
-disp(x);
+A = [1 -0.2589 -0.3093;-0.2589  1 -0.2705;-0.3093 -0.2705 1];
+b=[1 1 1];
+x0=zeros(1,3);
+[d1,ok1]=sem_03_gauss(A,b,3,x0);
+fprintf('матрица 3х3 A=')
+disp(A)
+fprintf('вектор-столбец 1х3 b=')
+disp(b)
+[d2,ok2]=sem_03_gauss_jordan(A,b,3,x0);
+[d3,ok3]=sem_03_kramer(A,b,3,x0);
+b=[1; 1; 1];
+[d4,ok4]= sem_03_matrix(A,b,x0);
+method={'matrix';'kramer'; 'gauss' ;'gauss_jordan'};
+solution=[d4';d3 ;d1 ;d2];
+check=[ok4;ok1;ok2;ok3];
+T=table(method,solution,check);
+disp(T)
 
 
 function [x, ok] = sem_03_matrix(A, b, x0)
-    [H, L] = size(A);
-    ok = det(A) ~= 0;
-    if ok
-        A = adj_Matrix(A);
+
+    if det(A) ~= 0
+        ok=true;
+
         A = reversed_Matrix(A);
         x = A * b;
     else
-         x = zeros(H, L);
+        ok=false;
+        x = x0;
     end
 end
 
-function x=sem_03_kramer(A,b,n)
+function [x,ok]=sem_03_kramer(A,b,n,x0)
+if (size(A,2)==size(A,1))
+    if (det(A)~=0)
+        ok=true;
+        x=zeros(1,n);
+        B=A;
+        for i=1:n
+            for j=1:n
+                B(j,i)=b(1,j);
+            end
+            x(1,i)=det(B)/det(A);
+            B=A;
+
+        end
+    else
+        ok=false;
+        x=x0;
+    end
+else
+        ok=false;
+        x=x0;
+end
+end
+
+function [x,ok]=sem_03_gauss(A,b,n,x0)
+if (size(A,2)==size(A,1))
+    ok=true;
+    x=zeros(1,n);
+    for i=1:n
+        for j=i+1:n
+            k=A(j,i)/A(i,i);
+            A(j,:)=A(j,:)-k*A(i,:);
+            b(1,j)=b(1,j)-k*b(1,i);
+
+        end
+    end
+
+    for i=n:-1:1
+
+        x(1,i)=(b(1,i)-sum_1(A,x,i,n))/A(i,i);
+    end
+else
+    ok=false;
+    x=x0;
+end
+end
+
+function s=sum_1(A,x,i,n)
+s=0;
+
+for k=i+1:n
+    s=s+A(i,k)*x(1,k);
+end
 
 end
 
-function  [x, ok] = sem_03_gauss(A, b, x0)
-    ok = (H == L);
-    if ok
-        disp('its_work');
+
+function [x,ok]=sem_03_gauss_jordan(A,b,n,x0)
+if (size(A,2)==size(A,1))
+    ok=true;
+    x=zeros(1,n);
+    for i=1:n
+        for j=i+1:n
+            k=A(j,i)/A(i,i);
+            A(j,:)=A(j,:)-k*A(i,:);
+            b(1,j)=b(1,j)-k*b(1,i);
+
+        end
     end
+    for i=n:-1:1
+        for j=i-1:-1:1
+        k=A(j,i)/A(i,i);
+        A(j,:)=A(j,:)-k*A(i,:);
+        b(1,j)=b(1,j)-k*b(1,i);
+        end
+    end
+    for i=n:-1:1
 
-
+        x(1,i)=(b(1,i)-sum_1(A,x,i,n))/A(i,i);
+    end
+else
+    ok=false;
+    x=x0;
 end
-
-function  [x, ok] = sem_03_gauss_jordan(A, b, x0)
-    ok = (H == L);
-    if ok
-        disp('its_work');
-    end
 end
 
 
