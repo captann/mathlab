@@ -3,11 +3,10 @@ from config import *
 from colorama import init, Fore
 
 init(autoreset=True)
-
-file = f"{type}_0{sem_n}_matrix_{sec_name}.m"
-
+matrix = int(matrix) * "matrix_"
+file = f"{type}_0{sem_n}_{matrix}{sec_name}.m"
 print(
-    Fore.WHITE + f"Mode:     {Fore.GREEN + state};" + "\n" + Fore.WHITE + f"File:     {Fore.GREEN + file}" + "\n" + Fore.WHITE + f'Is_exit:  {Fore.GREEN + str(bool(is_exit))}' + '\n' + Fore.WHITE + f"Sec_name: {Fore.GREEN + sec_name}" + '\n' + Fore.WHITE + f"Type:     {Fore.GREEN + type}")
+    Fore.WHITE + f"Mode:     {Fore.GREEN + state};" + "\n" + Fore.WHITE + f"File:     {Fore.GREEN + file}" + "\n" + Fore.WHITE + f'Is_exit:  {Fore.GREEN + str(bool(is_exit))}' + '\n' + Fore.WHITE + f"Sec_name: {Fore.GREEN + sec_name}" + '\n' + Fore.WHITE + f"Type:     {Fore.GREEN + type}" + "\n"+ Fore.WHITE + f"Matrix:   {Fore.GREEN + str(bool(matrix))}")
 print(Fore.WHITE + "---------")
 print(Fore.RED + "NOT USE IN PYCHARM! CMD ONLY!")
 print(Fore.YELLOW + "Correct?... ", end='')

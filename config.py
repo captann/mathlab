@@ -1,5 +1,8 @@
-state = "g" # r, rw, g
+state = "g" # r, rw, g, "c"
 is_exit = False # False, True
-sem_n = 3
-sec_name = "slau"
-type = "sem"# sem, lab, ucp
+sem_n = 1
+sec_name = "slau_iterative"
+matrix = False
+type = "lab"# sem, lab, ucp
+
+

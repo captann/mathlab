@@ -2,10 +2,10 @@ A = [1 -0.2589 -0.3093;-0.2589  1 -0.2705;-0.3093 -0.2705 1];
 b=[1 1 1];
 x0=zeros(1,3);
 [d1,ok1]=sem_03_gauss(A,b,3,x0);
-fprintf('матрица 3х3 A=')
-disp(A)
+fprintf('матрица 3х3 A=');
+disp(A);
 fprintf('вектор-столбец 1х3 b=')
-disp(b)
+disp(b);
 [d2,ok2]=sem_03_gauss_jordan(A,b,3,x0);
 [d3,ok3]=sem_03_kramer(A,b,3,x0);
 b=[1; 1; 1];
@@ -14,14 +14,12 @@ method={'matrix';'kramer'; 'gauss' ;'gauss_jordan'};
 solution=[d4';d3 ;d1 ;d2];
 check=[ok4;ok1;ok2;ok3];
 T=table(method,solution,check);
-disp(T)
+disp(T);
 
 
 function [x, ok] = sem_03_matrix(A, b, x0)
-
     if det(A) ~= 0
         ok=true;
-
         A = reversed_Matrix(A);
         x = A * b;
     else
@@ -31,27 +29,21 @@ function [x, ok] = sem_03_matrix(A, b, x0)
 end
 
 function [x,ok]=sem_03_kramer(A,b,n,x0)
-if (size(A,2)==size(A,1))
-    if (det(A)~=0)
-        ok=true;
-        x=zeros(1,n);
-        B=A;
-        for i=1:n
-            for j=1:n
-                B(j,i)=b(1,j);
+    ok = ((size(A,2)==size(A,1)) & (det(A)~=0));
+    if ok
+        n = size(A, 1);
+        x = zeros(1,n);
+        B = A;
+        for i = 1:n
+            for j = 1:n
+                B(j, i)=b(1, j);
             end
-            x(1,i)=det(B)/det(A);
-            B=A;
-
+            x(1, i) = det(B) / det(A);
+            B = A;
         end
     else
-        ok=false;
-        x=x0;
+        x = x0;
     end
-else
-        ok=false;
-        x=x0;
-end
 end
 
 function [x,ok]=sem_03_gauss(A,b,n,x0)
@@ -86,7 +78,6 @@ end
 
 end
 
-
 function [x,ok]=sem_03_gauss_jordan(A,b,n,x0)
 if (size(A,2)==size(A,1))
     ok=true;
@@ -115,7 +106,6 @@ else
     x=x0;
 end
 end
-
 
 function result = minor(A, i, j)
     [H, L] = size(A);
