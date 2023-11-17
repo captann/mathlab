@@ -132,7 +132,6 @@ function result = minor(A, i, j)
             if (la > L)
                 break;
             end
-            w = [hm ,lm, ha, la];
             M(hm, lm) = A(ha, la);
         end
     end
